@@ -1,0 +1,51 @@
+.form-creation-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .form-creation-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .form-creation-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-creation-container label {
+    margin-bottom: 5px;
+    margin-right: 10px;
+  }
+  
+  .form-creation-container input[type="text"],
+  .form-creation-container input[type="number"],
+  .form-creation-container input[type="email"],
+  .form-creation-container select {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .form-creation-container input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  .form-creation-container button {
+    padding: 5px 20px;
+    margin: 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .form-creation-container button:hover {
+    background-color: #0056b3;
+  }
+  

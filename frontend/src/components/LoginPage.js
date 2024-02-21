@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/loginpage.css";
-const LoginPage = () => {
+import { jwtDecode } from "jwt-decode";
+const LoginPage = ({ setUser }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -26,8 +27,12 @@ const LoginPage = () => {
       const data = await response.json();
       console.log(data); // Log response from backend (e.g., success message or error)
       if (response.ok) {
-        sessionStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.token);
+        const decodedUser = jwtDecode(data.token); // Decode token to get user info
+        setUser(decodedUser); // Update App.js state
         navigate("/"); // Redirect to homepage after successful login
+      } else {
+        alert(data.error.toString());
       }
       // Reset form fields if login is successful
       setFormData({
@@ -36,7 +41,6 @@ const LoginPage = () => {
       });
     } catch (error) {
       console.error("Error logging in:", error);
-      // Handle error (e.g., show error message to the user)
     }
   };
 

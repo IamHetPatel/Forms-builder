@@ -27,8 +27,8 @@ const SignUpPage = () => {
       const data = await response.json();
       console.log(data); // Log response from backend (e.g., success message or error)
       if (response.ok) {
-        sessionStorage.setItem("token", data.token);
-        navigate("/"); 
+        localStorage.setItem("token", data.token);
+        navigate("/");
       }
       // Reset form fields if sign-up is successful
       setFormData({
@@ -38,7 +38,6 @@ const SignUpPage = () => {
       });
     } catch (error) {
       console.error("Error signing up:", error);
-      // Handle error (e.g., show error message to the user)
     }
   };
 

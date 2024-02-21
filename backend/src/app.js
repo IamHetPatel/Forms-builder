@@ -75,7 +75,7 @@ app.post("/api/logout", async (req, res) => {
 });
 
 // View user profile
-app.get('/api/user/profile', auth, async (req, res) => {
+app.get('/api/user/profile', async (req, res) => {
     try {
       // Fetch the user profile based on the authenticated user
       const user = req.user;
@@ -87,13 +87,12 @@ app.get('/api/user/profile', auth, async (req, res) => {
   });
   
   // Update user profile
-  app.put('/api/user/profile', auth, async (req, res) => {
+  app.put('/api/user/profile', async (req, res) => {
     try {
       // Fetch the user profile based on the authenticated user
       const user = req.user;
-  
       // Update user profile information
-      user.name = req.body.name || user.name;
+      user.username = req.body.username || user.username;
       user.email = req.body.email || user.email;
       user.password = req.body.password || user.password;
   
@@ -104,28 +103,28 @@ app.get('/api/user/profile', auth, async (req, res) => {
     } catch (error) {
       console.error('Error updating user profile:', error);
       res.status(500).json({ error: 'Internal Server Error' });
-    }
+    } 
   });  
 
+// Form Creation API
 app.post('/api/forms', async (req, res) => {
     try {
-        const { title, fields } = req.body;
-        const createdBy = req.user._id;
-
+        const { title, fields, user_id } = req.body;
+        const createdBy = user_id;
         const form = new Form({ title, fields, createdBy });
         await form.save();
-        
-        res.status(201).json({ message: 'Form created successfully',form});
+        res.status(201).json({ message: 'Form created successfully', form });
     } catch (error) {
+        // Handle errors
         console.error('Error creating form:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-  
+
 // Retrieve all forms created by the user
-app.get('/api/forms', async (req, res) => {
+app.get('/api/forms/:_id', async (req, res) => {
     try {
-      const userId = req.user._id; 
+      const userId = req.params._id; 
       const forms = await Form.find({ createdBy: userId });
   
       res.status(200).json(forms);
@@ -140,10 +139,10 @@ app.put('/api/forms/:formId', async (req, res) => {
     try {
       const { title, fields } = req.body;
       const formId = req.params.formId;
-      const createdBy = req.user._id;
+      // const createdBy = req.user._id;
   
       // Check if the form exists and is created by the current user
-      const existingForm = await Form.findOne({ _id: formId, createdBy });
+      const existingForm = await Form.findOne({ _id: formId });
       if (!existingForm) {
         return res.status(404).json({ error: 'Form not found or you do not have permission to update it' });
       }
@@ -182,6 +181,22 @@ app.delete('/api/forms/:formId', async (req, res) => {
       console.error('Error deleting form:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
+});
+
+app.get('/api/forms/:formId/preview', async (req, res) => {
+  try {
+      const formId = req.params.formId;
+      const form = await Form.findById(formId);
+      if (!form) {
+          return res.status(404).json({ error: 'Form not found' });
+      }
+      
+      res.status(200).json(form.fields);
+      
+  } catch (error) {
+      console.error('Error retrieving form input details:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 // Submit a response to a form

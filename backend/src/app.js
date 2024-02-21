@@ -6,29 +6,31 @@ require("./db/conn");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
+const cors = require("cors");
 
+app.use(cors());
 app.use(cookieParser())
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
-
+const auth = require("./middleware/auth")
 const Register = require("./models/register");
 const Form = require('./models/form'); 
 
 // Register route
 app.post("/api/register", async (req, res) => {
   try {
-      const { name, email, username, password } = req.body;
+      const { username, email, password } = req.body;
       const userExists = await Register.findOne({ email });
       if (userExists) {
           return res.status(400).json({ error: "User already exists" });
       }
-      const newUser = new Register({ name, email, username, password });
+      const newUser = new Register({ username, email, password });
       const token = await newUser.generateAuthToken();
-      res.cookie("jwt", token, {
-          expires: new Date(Date.now() + 86400000), // 24 hours
-          httpOnly: true
-      });
+      // res.cookie("jwt", token, {
+      //     expires: new Date(Date.now() + 86400000), // 24 hours
+      //     httpOnly: true
+      // });
       await newUser.save();
       res.status(201).json({ message: "User registered successfully", token });
   } catch (error) {
@@ -50,10 +52,10 @@ app.post("/api/login", async (req, res) => {
           return res.status(401).json({ error: "Invalid credentials" });
       }
       const token = await user.generateAuthToken();
-      res.cookie("jwt", token, {
-          expires: new Date(Date.now() + 86400000), // 24 hours
-          httpOnly: true
-      });
+      // res.cookie("jwt", token, {
+      //     expires: new Date(Date.now() + 86400000), // 24 hours
+      //     httpOnly: true
+      // });
       res.status(200).json({ message: "Logged in successfully", token });
   } catch (error) {
       console.error("Error logging in:", error);

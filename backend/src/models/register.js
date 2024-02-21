@@ -28,7 +28,7 @@ const registrationSchema = new mongoose.Schema({
 // Generate JWT token
 registrationSchema.methods.generateAuthToken = async function() {
     try {
-        const token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET_KEY);
+        const token = jwt.sign({ _id: this._id.toString() , username: this.username.toString(), email: this.email.toString()}, process.env.SECRET_KEY);
         this.tokens = this.tokens.concat({ token });
         await this.save();
         return token;

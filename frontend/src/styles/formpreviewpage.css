@@ -1,0 +1,29 @@
+
+.form-preview-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .form-preview-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .form-preview-container label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .form-preview-container input[type="text"],
+  .form-preview-container textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-preview-container input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  

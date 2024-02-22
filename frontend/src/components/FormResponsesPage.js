@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import NavigationBar from "./NavigationBar";
 
 const FormResponsesPage = ({user, handleLogout}) => {
@@ -36,6 +36,7 @@ const FormResponsesPage = ({user, handleLogout}) => {
           ))}
         </div>
       ))}
+      <Link to={`/fillform/${formId}`} className="submit-form-link">Submit Response</Link>
     </div>
     </div>
   );

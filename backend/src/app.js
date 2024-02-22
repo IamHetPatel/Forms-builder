@@ -191,7 +191,7 @@ app.get('/api/forms/:formId/preview', async (req, res) => {
           return res.status(404).json({ error: 'Form not found' });
       }
       
-      res.status(200).json(form.fields);
+      res.status(200).json(form);
       
   } catch (error) {
       console.error('Error retrieving form input details:', error);

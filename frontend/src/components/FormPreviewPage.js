@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import '../styles/formpreviewpage.css';
 const FormPreviewPage = () => {
   const { formId } = useParams();
   const [formData, setFormData] = useState(null);
@@ -26,6 +27,7 @@ const FormPreviewPage = () => {
     <div className="form-preview-container">
       <h2>Form Preview</h2>
       {formData.fields.map((field, index) => (
+
         <div key={index}>
           <label>{field.label}</label>
           {field.type === 'text' && <input type="text" />}

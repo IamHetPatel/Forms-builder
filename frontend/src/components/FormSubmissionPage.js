@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import "../styles/formsubmissionpage.css";
+
 const FormSubmissionPage = () => {
   const { formId } = useParams();
   const [formData, setFormData] = useState(null);
   const [formResponses, setFormResponses] = useState({});
 
   useEffect(() => {
-    // Fetch form data from the backend using formId
-    fetch(`http://localhost:8000/api/forms/${formId}`)
-      .then((response) => response.json())
-      .then((data) => setFormData(data))
-      .catch((error) => console.error("Error fetching form data:", error));
+    const fetchFormData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/forms/${formId}/preview`
+        );
+        console.log("Response status:", response.status);
+        const data = await response.json();
+        console.log("Received data:", data);
+        setFormData(data);
+      } catch (error) {
+        console.error("Error fetching form data:", error);
+      }
+    };
+
+    fetchFormData();
   }, [formId]);
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -51,7 +63,7 @@ const FormSubmissionPage = () => {
     <div>
       <h1>{formData.title}</h1>
       <form onSubmit={handleSubmit}>
-        {formData.fields.map((field, index) => (
+        {formData.fields && formData.fields.map((field, index) => (
           <div key={index}>
             <label htmlFor={`field-${index}`}>{field.label}</label>
             {field.type === "text" && (

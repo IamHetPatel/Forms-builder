@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 8000;
-require("./db/conn");
+const PORT = process.env.PORT || 3000;
+const connectToDatabase = require("./db/conn"); 
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
@@ -242,7 +242,9 @@ app.get('/api/forms/:formId/responses', async (req, res) => {
 });
   
 
-
-app.listen(PORT, () => {
-  console.log(`server is running at port ${PORT}`);
+connectToDatabase().then(() => {
+  // Start the Express server
+  app.listen(PORT, () => {
+    console.log(`Server is running at port ${PORT}`);
+  });
 });

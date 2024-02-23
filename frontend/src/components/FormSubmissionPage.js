@@ -11,7 +11,7 @@ const FormSubmissionPage = () => {
     const fetchFormData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/forms/${formId}/preview`
+          `https://gray-rich-dragonfly.cyclic.app/api/forms/${formId}/preview`
         );
         console.log("Response status:", response.status);
         const data = await response.json();
@@ -25,12 +25,11 @@ const FormSubmissionPage = () => {
     fetchFormData();
   }, [formId]);
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:8000/api/forms/${formId}/submit`,
+        `https://gray-rich-dragonfly.cyclic.app/api/forms/${formId}/submit`,
         {
           method: "POST",
           headers: {
@@ -63,50 +62,51 @@ const FormSubmissionPage = () => {
     <div>
       <h1>{formData.title}</h1>
       <form onSubmit={handleSubmit}>
-        {formData.fields && formData.fields.map((field, index) => (
-          <div key={index}>
-            <label htmlFor={`field-${index}`}>{field.label}</label>
-            {field.type === "text" && (
-              <input
-                type="text"
-                id={`field-${index}`}
-                onChange={(event) => handleInputChange(event, index)}
-                required={field.required}
-              />
-            )}
-            {field.type === "textarea" && (
-              <textarea
-                id={`field-${index}`}
-                onChange={(event) => handleInputChange(event, index)}
-                required={field.required}
-              />
-            )}
-            {field.type === "checkbox" && (
-              <input
-                type="checkbox"
-                id={`field-${index}`}
-                onChange={(event) => handleInputChange(event, index)}
-                required={field.required}
-              />
-            )}
-            {field.type === "number" && (
-              <input
-                type="number"
-                id={`field-${index}`}
-                onChange={(event) => handleInputChange(event, index)}
-                required={field.required}
-              />
-            )}
-            {field.type === "email" && (
-              <input
-                type="email"
-                id={`field-${index}`}
-                onChange={(event) => handleInputChange(event, index)}
-                required={field.required}
-              />
-            )}
-          </div>
-        ))}
+        {formData.fields &&
+          formData.fields.map((field, index) => (
+            <div key={index}>
+              <label htmlFor={`field-${index}`}>{field.label}</label>
+              {field.type === "text" && (
+                <input
+                  type="text"
+                  id={`field-${index}`}
+                  onChange={(event) => handleInputChange(event, index)}
+                  required={field.required}
+                />
+              )}
+              {field.type === "textarea" && (
+                <textarea
+                  id={`field-${index}`}
+                  onChange={(event) => handleInputChange(event, index)}
+                  required={field.required}
+                />
+              )}
+              {field.type === "checkbox" && (
+                <input
+                  type="checkbox"
+                  id={`field-${index}`}
+                  onChange={(event) => handleInputChange(event, index)}
+                  required={field.required}
+                />
+              )}
+              {field.type === "number" && (
+                <input
+                  type="number"
+                  id={`field-${index}`}
+                  onChange={(event) => handleInputChange(event, index)}
+                  required={field.required}
+                />
+              )}
+              {field.type === "email" && (
+                <input
+                  type="email"
+                  id={`field-${index}`}
+                  onChange={(event) => handleInputChange(event, index)}
+                  required={field.required}
+                />
+              )}
+            </div>
+          ))}
         <button type="submit">Submit</button>
       </form>
     </div>

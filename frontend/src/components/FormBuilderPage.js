@@ -41,13 +41,16 @@ const FormBuilderPage = ({ user, handleLogout }) => {
       const user_id = user._id;
 
       // Send form data to the backend API
-      const response = await fetch("http://localhost:8000/api/forms", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title, fields, user_id }),
-      });
+      const response = await fetch(
+        "https://gray-rich-dragonfly.cyclic.app/api/forms",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title, fields, user_id }),
+        }
+      );
       if (response.ok) {
         // Redirect to a success page upon successful form creation
         navigate("/");

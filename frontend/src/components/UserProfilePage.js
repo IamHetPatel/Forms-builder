@@ -17,14 +17,17 @@ const UserProfilePage = ({ user, handleLogout }) => {
         console.error("No token found");
         return;
       }
-      const response = await fetch("http://localhost:8000/api/user/profile", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Include the token here as well
-        },
-        body: JSON.stringify(userDet),
-      });
+      const response = await fetch(
+        "https://gray-rich-dragonfly.cyclic.app/api/user/profile",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include the token here as well
+          },
+          body: JSON.stringify(userDet),
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to update user profile");
       }
@@ -38,8 +41,8 @@ const UserProfilePage = ({ user, handleLogout }) => {
 
   const handleUpdateProfileTemp = async (e) => {
     e.preventDefault();
-    alert("to be implemented")
-  }
+    alert("to be implemented");
+  };
 
   return (
     <div>

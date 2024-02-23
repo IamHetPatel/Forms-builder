@@ -2,12 +2,11 @@ require('dotenv').config();
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8000;
-// require("./db/conn");
+require("./db/conn");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
 const cors = require("cors");
-const mongoose = require( "mongoose" );
 
 app.use(cors());
 app.use(cookieParser())
@@ -243,20 +242,7 @@ app.get('/api/forms/:formId/responses', async (req, res) => {
 });
   
 
-const connectDB = async () => {
-  try {
-    mongoose.connect(process.env.MONGO_PASS, {
-})
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Error connecting to MongoDB:', err));
 
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
-}
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`server is running at port ${PORT}`);
-  });
-})
+app.listen(PORT, () => {
+  console.log(`server is running at port ${PORT}`);
+});

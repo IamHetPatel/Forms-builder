@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import NavigationBar from "./NavigationBar";
-
+import "../styles/formresponsespage.css"
 const FormResponsesPage = ({ user, handleLogout }) => {
   const { formId } = useParams();
   const [responses, setResponses] = useState([]);
@@ -33,13 +33,13 @@ const FormResponsesPage = ({ user, handleLogout }) => {
             <p>Response {index + 1}</p>
             {Object.entries(response).map(([key, value]) => (
               <div key={key}>
-                <strong>{key}:</strong> {value}
+                <strong>{parseInt(key)+1}: </strong> {value}
               </div>
             ))}
           </div>
         ))}
         <Link to={`/fillform/${formId}`} className="submit-form-link">
-          Submit Response
+          Submit a Response
         </Link>
       </div>
     </div>
